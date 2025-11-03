@@ -1,0 +1,19 @@
+# Editor configurations
+.vs/
+.idea/
+
+# Project files
+node_modules/
+*.d*
+
+# User files
+.env*
+!.env*.template
+
+# Other files: Cloudflare
+.wrangler/
+
+# Miscellaneous files
+.DS_Store
+Desktop.ini
+Thumbs.db

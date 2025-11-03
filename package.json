@@ -1,0 +1,6 @@
+{
+  "name": "mandrips",
+  "devDependencies": {
+    "wrangler": "^4.45.3"
+  }
+}
