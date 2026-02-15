@@ -56,7 +56,7 @@ export function pushCart(item) {
     cart.some((cartItem) => cartItem.id === item.id && cartItem.color === item.color && cartItem.size === item.size)
   ) {
     const cartItem = cart.find(
-      (cartItem) => cartItem.id === item.id && cartItem.color === item.color && cartItem.size === item.size
+      (cartItem) => cartItem.id === item.id && cartItem.color === item.color && cartItem.size === item.size,
     );
     cartItem.quantity = Number.parseInt(cartItem.quantity) + Number.parseInt(item.quantity);
   } else {

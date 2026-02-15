@@ -77,8 +77,8 @@ export function getProductsColors() {
           colorName: color.name,
           colorUrl: color.url,
         };
-      })
-    )
+      }),
+    ),
   );
 }
 
@@ -108,6 +108,6 @@ export function getProductColors(id) {
         colorName: color.name,
         colorUrl: color.url,
       };
-    })
+    }),
   );
 }

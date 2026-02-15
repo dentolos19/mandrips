@@ -21,7 +21,7 @@ async function loadCart() {
   e_items.innerHTML = "";
   for (const item of cart) {
     const productColor = (await getProductColors(item.id)).find(
-      (productColor) => productColor.colorName === item.color
+      (productColor) => productColor.colorName === item.color,
     );
 
     const getItemPrice = () => `$${(productColor.price * item.quantity).toFixed(2)}`;
