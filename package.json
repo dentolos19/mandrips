@@ -1,10 +1,13 @@
 {
   "name": "mandrips",
   "scripts": {
-    "dev": "bun run index.ts"
+    "dev": "bun run index.ts",
+    "check": "oxlint --fix && oxfmt --write"
   },
   "devDependencies": {
-    "@types/bun": "^1.3.9",
-    "wrangler": "^4.65.0"
+    "@types/bun": "latest",
+    "oxfmt": "^0.55.0",
+    "oxlint": "^1.83.0",
+    "wrangler": "^4.135.0"
   }
 }

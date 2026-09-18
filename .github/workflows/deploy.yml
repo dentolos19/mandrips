@@ -1,4 +1,4 @@
-name: Web Development
+name: Web Deployment
 on:
   push:
     branches:
@@ -22,9 +22,9 @@ jobs:
       - name: Install Dependencies
         run: bun install --frozen-lockfile
 
-      - name: Deploy to Cloudflare
-        uses: cloudflare/wrangler-action@v3
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@v4
         with:
-          accountId: ${{ secrets.CLOUDFLARE_ID }}
-          apiToken: ${{ secrets.CLOUDFLARE_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: deploy
