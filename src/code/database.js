@@ -1,56 +1,29 @@
-class Product {
-  /**
-   *
-   * @param {number} id
-   * @param {string} type
-   * @param {string} name
-   * @param {number} price
-   * @param {string} description
-   * @param {ProductColor} colors
-   */
-  constructor(id, type, name, price, description, colors) {
-    this.id = id;
-    this.type = type;
-    this.name = name;
-    this.price = price;
-    this.description = description;
-    this.colors = colors;
-  }
-}
+/**
+ * @typedef {object} ProductColor
+ * @property {string} name
+ * @property {string} url
+ */
 
-class ProductColor {
-  /**
-   *
-   * @param {string} name
-   * @param {string} url
-   */
-  constructor(name, url) {
-    this.name = name;
-    this.url = url;
-  }
-}
+/**
+ * @typedef {object} Product
+ * @property {number} id
+ * @property {string} type
+ * @property {string} name
+ * @property {number} price
+ * @property {string} description
+ * @property {ProductColor[]} colors
+ */
 
-class ColoredProduct {
-  /**
-   *
-   * @param {number} id
-   * @param {string} type
-   * @param {string} name
-   * @param {number} price
-   * @param {string} description
-   * @param {string} colorName
-   * @param {string} colorUrl
-   */
-  constructor(id, type, name, price, description, colorName, colorUrl) {
-    this.id = id;
-    this.type = type;
-    this.name = name;
-    this.price = price;
-    this.description = description;
-    this.colorName = colorName;
-    this.colorUrl = colorUrl;
-  }
-}
+/**
+ * @typedef {object} ColoredProduct
+ * @property {number} id
+ * @property {string} type
+ * @property {string} name
+ * @property {number} price
+ * @property {string} description
+ * @property {string} colorName
+ * @property {string} colorUrl
+ */
 
 /**
  *
