@@ -1,4 +1,9 @@
 set dotenv-load
+set dotenv-filename := dotenv_file
+set dotenv-override
+
+environment := ""
+dotenv_file := if environment == "" { ".env" } else { ".env." + environment }
 
 setup: install
 
@@ -8,10 +13,14 @@ install:
 start:
     bun run dev
 
-check:
-    bun run check
+build:
+    bun run build
 
-deploy: install
+check:
+    bun lint --fix && bun fmt && bun check --no-script
+    bun test
+
+deploy: install build
     #!/usr/bin/env bash
     set -euo pipefail
-    bun wrangler deploy
+    bun run deploy --prebuilt

@@ -1,6 +1,7 @@
 import { build as buildNavigation } from "./components/navigation.js";
+import { element } from "./utils.js";
 
-document.querySelector("head").insertAdjacentHTML(
+element("head").insertAdjacentHTML(
   "beforeend",
   `
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/metadata/apple-touch-icon.png">
@@ -10,11 +11,11 @@ document.querySelector("head").insertAdjacentHTML(
   `,
 );
 
-document.querySelector("nav").replaceWith(buildNavigation());
+element("nav").replaceWith(buildNavigation());
 
-const disclaimerRead = JSON.parse(localStorage.getItem("disclaimerAccepted"));
+const disclaimerRead = localStorage.getItem("disclaimerAccepted") === "true";
 if (!disclaimerRead) {
-  document.querySelector("body").insertAdjacentHTML(
+  element("body").insertAdjacentHTML(
     "beforeend",
     `
 <dialog class="disclaimer">
@@ -33,8 +34,8 @@ if (!disclaimerRead) {
 </dialog>
     `,
   );
-  document.querySelector(".disclaimer").showModal();
-  document.querySelector(".disclaimer form").addEventListener("submit", () => {
+  element<HTMLDialogElement>(".disclaimer").showModal();
+  element(".disclaimer form").addEventListener("submit", () => {
     localStorage.setItem("disclaimerAccepted", "true");
   });
 }
