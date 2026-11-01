@@ -4,13 +4,15 @@
 
 # Project files
 node_modules/
-*.d*
+*.tsbuildinfo
+dist/
 
 # User files
 .env*
 !.env*.template
 
 # Other files: Cloudflare
+.cloudflare/
 .wrangler/
 
 # Miscellaneous files

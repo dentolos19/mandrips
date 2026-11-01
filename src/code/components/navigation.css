@@ -46,6 +46,10 @@ nav .links a:hover {
 }
 
 nav .toggle {
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
   padding: 0 1rem;
   display: none;
   justify-content: center;
