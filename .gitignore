@@ -1,20 +1,15 @@
-# Editor configurations
-.vs/
-.idea/
-
-# Project files
-node_modules/
-*.d*
-
-# User files
-.env*
-!.env*.template
-
-# Other files: Cloudflare
-.wrangler/
-
-# Miscellaneous files
-.tmp/
+*.tsbuildinfo
 .DS_Store
+.cloudflare/
+.env*
+.idea/
+.tmp/
+.vs/
+.wrangler/
 Desktop.ini
 Thumbs.db
+dist/
+node_modules/
+
+!.env*.template
+!.gitkeep

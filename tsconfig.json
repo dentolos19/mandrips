@@ -1,13 +1,12 @@
 {
+  "include": ["src/code/**/*.ts", "scripts/**/*.ts", "tests/**/*.ts", "*.config.ts"],
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "allowJs": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": ["bun"]
-  },
-  "include": ["index.ts", "src/code/**/*.js"]
+    "types": ["bun"],
+    "strict": true
+  }
 }

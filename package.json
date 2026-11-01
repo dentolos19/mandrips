@@ -2,14 +2,13 @@
   "name": "mandrips",
   "type": "module",
   "scripts": {
-    "dev": "bun run index.ts",
-    "check": "oxlint --fix && oxfmt --write && tsc --noEmit"
+    "dev": "bun scripts/build.ts --watch",
+    "build": "bun scripts/build.ts && cf build",
+    "deploy": "cf deploy"
   },
   "devDependencies": {
-    "@types/bun": "^1.4.3",
-    "oxfmt": "^0.73.0",
-    "oxlint": "^1.88.0",
-    "typescript": "^7.0.2",
-    "wrangler": "^4.151.0"
+    "@types/bun": "^1.4.4",
+    "cf": "1.0.0-beta.26",
+    "wrangler": "^4.156.0"
   }
 }

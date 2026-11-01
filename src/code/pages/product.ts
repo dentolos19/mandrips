@@ -1,6 +1,6 @@
 import { pushCart } from "../cart.js";
 import { getProductColors } from "../database.js";
-import { getSearchParams, setSearchParams } from "../utils.js";
+import { element, setSearchParams } from "../utils.js";
 
 const sizes = [
   {
@@ -29,24 +29,26 @@ const sizes = [
   },
 ];
 
-const searchParams = getSearchParams();
-const id = searchParams.id;
-const color = searchParams.color;
-const size = searchParams.size;
+const searchParams = new URLSearchParams(location.search);
+const id = searchParams.get("id");
+const color = searchParams.get("color");
+const size = searchParams.get("size");
 
-const e_previews = document.querySelector(".preview");
-const e_form = document.querySelector("form");
-const e_name = document.querySelector(".name");
-const e_price = document.querySelector(".price");
-const e_description = document.querySelector(".description");
-const e_colors = document.querySelector(".colors");
-const e_sizes = document.querySelector(".sizes");
+const e_previews = element(".preview");
+const e_form = element<HTMLFormElement>("form");
+const e_name = element(".name");
+const e_price = element(".price");
+const e_description = element(".description");
+const e_colors = element(".colors");
+const e_sizes = element(".sizes");
 
 async function loadProducts() {
   const shirtColors = await getProductColors(id);
 
-  // Load product description
   const shirtColor = shirtColors[0];
+  if (!shirtColor) throw new Error("Product not found.");
+  const selectedColor = shirtColors.some((entry) => entry.colorName === color) ? color : shirtColor.colorName;
+  const selectedSize = sizes.find((entry) => entry.id === size || entry.name === size)?.id ?? "M";
   e_name.textContent = shirtColor.name;
   e_price.textContent = `$${shirtColor.price.toFixed(2)}`;
   e_description.textContent = shirtColor.description;
@@ -67,7 +69,7 @@ async function loadProducts() {
     e_colorSelector.name = "color";
     e_colorSelector.value = shirtColor.colorName;
     e_colorSelector.addEventListener("change", () => {
-      document.querySelector(`img[alt=${shirtColor.colorName}]`).scrollIntoView();
+      e_preview.scrollIntoView({ block: "nearest", inline: "nearest" });
       setSearchParams({
         color: shirtColor.colorName,
       });
@@ -76,20 +78,13 @@ async function loadProducts() {
     const e_colorName = document.createElement("span");
     e_colorName.textContent = shirtColor.colorName;
 
-    // TODO: check default if color is invalid
-    if (!color) {
-      e_colorSelector.checked = shirtColor.colorName === shirtColors[0].colorName;
-    } else if (shirtColor.colorName === color) {
-      e_colorSelector.checked = true;
-    }
+    e_colorSelector.checked = shirtColor.colorName === selectedColor;
+    if (e_colorSelector.checked && color) e_preview.scrollIntoView({ block: "nearest", inline: "nearest" });
 
     e_color.appendChild(e_colorSelector);
     e_color.appendChild(e_colorName);
     e_colors.appendChild(e_color);
   }
-
-  // Scroll to param color
-  document.querySelector(`img[alt=${color}]`).scrollIntoView();
 
   // Add size options
   for (const shirtSize of sizes) {
@@ -110,12 +105,7 @@ async function loadProducts() {
     sizeNameElement.textContent = shirtSize.id;
     sizeNameElement.title = shirtSize.name;
 
-    // TODO: check default if size is invalid
-    if (!size) {
-      sizeSelectorElement.checked = shirtSize.id === sizes[2].id;
-    } else if (shirtSize.id === size || shirtSize.name === size) {
-      sizeSelectorElement.checked = true;
-    }
+    sizeSelectorElement.checked = shirtSize.id === selectedSize;
 
     sizeElement.appendChild(sizeSelectorElement);
     sizeElement.appendChild(sizeNameElement);
@@ -123,22 +113,34 @@ async function loadProducts() {
   }
 }
 
-function handleAdd(event) {
+function handleAdd(event: SubmitEvent) {
   event.preventDefault();
 
-  const data = new FormData(event.target);
+  const data = new FormData(e_form);
   const entries = Object.fromEntries(data.entries());
 
-  pushCart({
-    id,
-    color: entries.color,
-    size: entries.size,
-    quantity: entries.quantity,
-  });
+  try {
+    pushCart({
+      id: Number(id),
+      color: String(entries.color ?? ""),
+      size: String(entries.size ?? ""),
+      quantity: Number(entries.quantity),
+    });
 
-  alert("Added to cart!");
+    alert("Added to cart!");
+  } catch (error) {
+    alert(error instanceof Error ? error.message : "Could not update cart.");
+  }
 }
 
 e_form.addEventListener("submit", handleAdd);
 
-loadProducts();
+const addButton = element<HTMLButtonElement>("button[type=submit]");
+addButton.disabled = true;
+loadProducts()
+  .then(() => {
+    addButton.disabled = false;
+  })
+  .catch((error: unknown) => {
+    e_name.textContent = error instanceof Error ? error.message : "Could not load product.";
+  });

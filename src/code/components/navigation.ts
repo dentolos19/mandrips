@@ -30,12 +30,15 @@ export function build() {
     e_links.appendChild(e_link);
   }
 
-  const e_toggle = document.createElement("div");
+  const e_toggle = document.createElement("button");
+  e_toggle.type = "button";
+  e_toggle.setAttribute("aria-label", "Toggle navigation");
+  e_toggle.setAttribute("aria-expanded", "false");
   e_toggle.className = "toggle";
   e_toggle.innerHTML = "<i class='fa fa-bars'></i>";
 
   e_toggle.addEventListener("click", () => {
-    e_links.classList.toggle("active");
+    e_toggle.setAttribute("aria-expanded", String(e_links.classList.toggle("active")));
   });
 
   e_nav.appendChild(e_title);
@@ -46,7 +49,7 @@ export function build() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const linkElements = document.querySelectorAll("nav .links a");
+  const linkElements = document.querySelectorAll<HTMLAnchorElement>("nav .links a");
   for (const link of linkElements) {
     if (link.href === window.location.href) {
       link.classList.add("active");
