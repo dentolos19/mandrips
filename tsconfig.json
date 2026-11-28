@@ -6,6 +6,9 @@
     "moduleResolution": "bundler",
     "noEmit": true,
     "skipLibCheck": true,
+    "paths": {
+      "#/*": ["./src/*"]
+    },
     "types": ["bun"],
     "strict": true
   }

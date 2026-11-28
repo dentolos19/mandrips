@@ -1,6 +1,6 @@
 import { afterAll, beforeEach, expect, test } from "bun:test";
 
-import { clearCart, getCart, getCartTotal, popCart, pushCart, setCart } from "../src/code/cart";
+import { clearCart, getCart, getCartTotal, popCart, pushCart, setCart } from "#/code/cart";
 
 const storage = new Map<string, string>();
 const previousStorage = Object.getOwnPropertyDescriptor(globalThis, "localStorage");

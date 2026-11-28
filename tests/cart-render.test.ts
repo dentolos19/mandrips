@@ -74,7 +74,7 @@ if (scenario === "clear-before-load" || scenario === "unavailable-only") {
   });
   Object.defineProperty(globalThis, "fetch", { value: () => pendingCatalog });
 
-  await import("../src/code/pages/cart");
+  await import("#/code/pages/cart");
   if (scenario === "clear-before-load") clear.listeners.get("click")?.();
   resolveCatalog(
     Response.json([

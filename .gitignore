@@ -3,6 +3,7 @@
 .cloudflare/
 .env*
 .idea/
+.playwright-cli/
 .tmp/
 .vs/
 .wrangler/

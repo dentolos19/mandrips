@@ -2,15 +2,15 @@
 
 ## Configuration
 
-The static site uses the pinned `cf` beta CLI with [`cloudflare.config.ts`](../../cloudflare.config.ts) for its Worker identity, custom domain, observability, and single-page-app fallback. [`wrangler.config.ts`](../../wrangler.config.ts) uses the generated `dist` asset directory and local port 3000 for the Wrangler bundler used by `cf`. Wrangler remains a build dependency. See [0001](../decisions/0001-custom-bun-build-with-cf-cli.md).
+The static site uses the pinned `cf` beta CLI with [`cloudflare.config.ts`](../../cloudflare.config.ts) for its Worker identity, custom domain, observability, and single-page-app fallback. [`wrangler.config.ts`](../../wrangler.config.ts) uses the generated `dist` asset directory and local port 3000 for the Wrangler bundler used by `cf`. Wrangler remains a build dependency, pinned to match the `cf` beta. See [0001](../decisions/0001-custom-bun-build-with-cf-cli.md) and [0002](../decisions/0002-pin-wrangler-for-cf-beta.md).
 
-## Commands
+Generated Cloudflare build output and local state are ignored in `.cloudflare/`.
 
-Use `just start` to serve the site locally, `just build` to package it, and `just deploy` to install, build, and upload the prebuilt assets. The site has no application secrets, so deployment does not require an environment file or upload a secrets file. Supply Cloudflare account and API credentials through the process environment or the existing GitHub Production environment.
+## Deployment
 
-The shared `environment` selector chooses `.env` by default, or `.env.<name>` when set, and gives the file precedence over inherited values. It does not change the Worker or domain.
+`just deploy` installs, builds, and uploads the prebuilt assets. The site reads no variables, so it has no `.env.template`, and deployment neither requires nor uploads a dotenv file. See [0003](../decisions/0003-deploy-without-secrets-file.md).
 
-`just check` uses Bun's built-in lint, format, and type-check commands. Formatter options live in `bunfig.toml`, and `.editorconfig` retains the line-width guide. Generated Cloudflare build output and local state are ignored in `.cloudflare/`.
+The `environment` selector chooses `.env` by default, or `.env.<name>` when set, and gives the file precedence over inherited values. It does not change the Worker or domain. Cloudflare account and API credentials come from the process environment, or from repository secrets in the GitHub `Production` environment.
 
 ## Browser Modules
 
